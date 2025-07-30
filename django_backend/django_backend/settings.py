@@ -22,10 +22,16 @@ sys.path.append(str(BASE_DIR))
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# SECRET_KEY = "django-insecure--hxnaiv$8_^b4ggv@r=k1w*db+6o&f+2&oyzmwh95ma+-*de&_"
+
 SECRET_KEY = os.environ.get("SECRET_KEY", "fallback-unsafe-key")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = True
+
+# ALLOWED_HOSTS = []
+
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost").split(",")
@@ -131,6 +137,12 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # MongoDB settings
+# MONGODB_SETTINGS = {
+#     "db": "agropredicta",
+#     "host": "localhost",
+#     "port": 27017,
+# }
+
 from urllib.parse import urlparse
 
 MONGODB_URI = os.environ.get("MONGODB_URI")
