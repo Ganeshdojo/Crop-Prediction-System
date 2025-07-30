@@ -131,7 +131,6 @@ dmypy.json
 *.weights
 
 # Data files (exclude by default, uncomment if you want to include)
-*.csv
 *.json
 *.xlsx
 *.xls
