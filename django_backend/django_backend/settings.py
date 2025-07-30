@@ -231,10 +231,10 @@ CSRF_COOKIE_HTTPONLY = False  # Set to True in production
 CSRF_COOKIE_SAMESITE = "Lax"
 
 # MongoDB Connection
-from mongoengine import connect
+# from mongoengine import connect
 
-connect(
-    db=MONGODB_SETTINGS["db"],
-    host=MONGODB_SETTINGS["host"],
-    port=MONGODB_SETTINGS["port"],
-)
+# connect(
+#     db=MONGODB_SETTINGS["db"],
+#     host=MONGODB_SETTINGS["host"],
+#     port=MONGODB_SETTINGS["port"],
+# )
