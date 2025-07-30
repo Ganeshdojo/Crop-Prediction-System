@@ -49,3 +49,8 @@ bcrypt==4.0.1
 
 # JSON and Serialization
 ujson==5.8.0
+
+
+
+
+imbalanced-learn==0.12.2
