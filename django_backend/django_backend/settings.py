@@ -22,12 +22,13 @@ sys.path.append(str(BASE_DIR))
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure--hxnaiv$8_^b4ggv@r=k1w*db+6o&f+2&oyzmwh95ma+-*de&_"
+SECRET_KEY = os.environ.get("SECRET_KEY", "fallback-unsafe-key")
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost").split(",")
 
 
 # Application definition
@@ -130,11 +131,27 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # MongoDB settings
-MONGODB_SETTINGS = {
-    "db": "agropredicta",
-    "host": "localhost",
-    "port": 27017,
-}
+from urllib.parse import urlparse
+
+MONGODB_URI = os.environ.get("MONGODB_URI")
+
+from mongoengine import connect
+
+if MONGODB_URI:
+    parsed_uri = urlparse(MONGODB_URI)
+    connect(host=MONGODB_URI)
+else:
+    MONGODB_SETTINGS = {
+        "db": "agropredicta",
+        "host": "localhost",
+        "port": 27017,
+    }
+    connect(
+        db=MONGODB_SETTINGS["db"],
+        host=MONGODB_SETTINGS["host"],
+        port=MONGODB_SETTINGS["port"],
+    )
+
 
 # CORS settings
 CORS_ALLOW_ALL_ORIGINS = True  # For development only
