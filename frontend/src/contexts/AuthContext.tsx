@@ -1,5 +1,4 @@
 import { createContext, useContext, ReactNode, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { 
   useAuth as useClerkAuth, 
   useUser, 
@@ -37,7 +36,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const { signUp } = useSignUp();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const navigate = useNavigate();
 
   const username = user?.username || user?.firstName || null;
   const email = user?.primaryEmailAddress?.emailAddress || null;
@@ -59,7 +57,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       
       if (result.status === "complete") {
         // The status is complete, the user is signed in
-        navigate("/prediction");
+        // Use window.location for navigation since we're in a provider
+        window.location.href = "/prediction";
       } else {
         // Handle other status cases, like "needs_factor_2"
         console.log("Login needs additional steps:", result);
@@ -89,7 +88,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       
       if (result.status === "complete") {
         // The status is complete, redirect to the prediction
-        navigate("/prediction");
+        window.location.href = "/prediction";
       } else if (result.status === "missing_requirements" && 
                  result.unverifiedFields.includes("email_address")) {
         // Prepare email verification
@@ -105,7 +104,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }));
         
         // Redirect to verification page
-        navigate("/verify");
+        window.location.href = "/verify";
       } else {
         console.log("Registration status:", result);
         setError("Registration couldn't be completed. Please try again.");

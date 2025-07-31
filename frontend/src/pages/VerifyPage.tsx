@@ -51,7 +51,7 @@ export const VerifyPage = () => {
         // Set a flag to bypass authentication checks during the redirect
         sessionStorage.setItem('justVerified', 'true');
         
-        // Use navigate instead of window.location.href
+        // Use navigate since this is a component within Router context
         navigate('/prediction');
       } else {
         console.log("Verification result:", result);
