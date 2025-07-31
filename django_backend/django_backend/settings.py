@@ -166,7 +166,7 @@ else:
 
 
 # CORS settings
-CORS_ALLOW_ALL_ORIGINS = os.environ.get("CORS_ALLOW_ALL_ORIGINS", "False") == "True"
+CORS_ALLOW_ALL_ORIGINS = True  # Temporarily enable for debugging
 CORS_ALLOWED_ORIGINS = os.environ.get(
     "CORS_ALLOWED_ORIGINS",
     "http://localhost:3000,http://127.0.0.1:3000,https://agropredicta.vercel.app",
@@ -192,6 +192,13 @@ CORS_ALLOW_HEADERS = [
     "x-csrftoken",
     "x-requested-with",
 ]
+
+# Additional CORS settings for better compatibility
+CORS_EXPOSE_HEADERS = [
+    "content-type",
+    "content-disposition",
+]
+CORS_PREFLIGHT_MAX_AGE = 86400
 
 # For production, use:
 # CORS_ALLOWED_ORIGINS = [
