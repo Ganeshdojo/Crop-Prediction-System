@@ -145,16 +145,19 @@ class CropModel:
                 )
 
                 self.model = XGBClassifier(
-                    n_estimators=100,  # Reduced trees for faster training
-                    max_depth=None,  # Let trees grow fully
-                    learning_rate=0.1,
+                    n_estimators=50,  # Reduced from 100 for faster training
+                    max_depth=6,  # Limit depth to prevent overfitting and speed up
+                    learning_rate=0.2,  # Increased for faster convergence
                     random_state=42,
-                    n_jobs=-1,  # Use all CPU cores
+                    n_jobs=1,  # Use single thread to avoid memory issues
                     objective="multi:softprob",
                     eval_metric="mlogloss",
                     num_class=len(
                         np.unique(y_balanced)
                     ),  # Set number of classes explicitly
+                    tree_method="hist",  # Use histogram method for faster training
+                    subsample=0.8,  # Use 80% of samples per tree
+                    colsample_bytree=0.8,  # Use 80% of features per tree
                 )
             else:
                 raise ValueError(f"Unsupported algorithm: {self.algorithm}")
@@ -165,11 +168,22 @@ class CropModel:
 
             # Train the model
             print("Training model...")
-            if self.algorithm == "xgboost":
-                self.model.fit(X_balanced, y_balanced, sample_weight=sample_weights)
-            else:
-                self.model.fit(X_balanced, y_balanced)
-            print("Model training completed successfully")
+            try:
+                if self.algorithm == "xgboost":
+                    print("Training XGBoost model with sample weights...")
+                    self.model.fit(X_balanced, y_balanced, sample_weight=sample_weights)
+                    print("XGBoost training completed successfully")
+                else:
+                    print("Training Random Forest model...")
+                    self.model.fit(X_balanced, y_balanced)
+                    print("Random Forest training completed successfully")
+            except Exception as e:
+                print(f"Error during model training: {str(e)}")
+                import traceback
+
+                print("Full traceback:")
+                print(traceback.format_exc())
+                raise e
 
             # Verify the model works by making a test prediction
             print("Verifying model with test prediction...")
