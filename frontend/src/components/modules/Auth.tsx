@@ -98,8 +98,10 @@ export const Auth = ({ initialMode = "login" }: AuthProps) => {
     
     if (mode === "login") {
       await login(email, password, rememberMe);
+      navigate("/prediction", { replace: true });
     } else {
       await register(fullName, email, password);
+      navigate("/prediction", { replace: true });
     }
   };
 
