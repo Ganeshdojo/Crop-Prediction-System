@@ -51,8 +51,8 @@ export const VerifyPage = () => {
         // Set a flag to bypass authentication checks during the redirect
         sessionStorage.setItem('justVerified', 'true');
         
-        // Hard redirect to reset the application state
-        window.location.href = '/prediction';
+        // Use navigate instead of window.location.href
+        navigate('/prediction');
       } else {
         console.log("Verification result:", result);
         setError("Verification couldn't be completed. Please try again.");
