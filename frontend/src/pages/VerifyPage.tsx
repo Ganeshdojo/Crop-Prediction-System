@@ -52,7 +52,7 @@ export const VerifyPage = () => {
         sessionStorage.setItem('justVerified', 'true');
         
         // Hard redirect to reset the application state
-        window.location.href = '/dashboard';
+        window.location.href = '/prediction';
       } else {
         console.log("Verification result:", result);
         setError("Verification couldn't be completed. Please try again.");

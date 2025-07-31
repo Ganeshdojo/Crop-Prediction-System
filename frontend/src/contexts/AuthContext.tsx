@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       
       if (result.status === "complete") {
         // The status is complete, the user is signed in
-        window.location.href = "/dashboard";
+        window.location.href = "/prediction";
       } else {
         // Handle other status cases, like "needs_factor_2"
         console.log("Login needs additional steps:", result);
@@ -86,8 +86,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       });
       
       if (result.status === "complete") {
-        // The status is complete, redirect to the dashboard
-        window.location.href = "/dashboard";
+        // The status is complete, redirect to the prediction
+        window.location.href = "/prediction";
       } else if (result.status === "missing_requirements" && 
                  result.unverifiedFields.includes("email_address")) {
         // Prepare email verification

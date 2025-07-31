@@ -18,7 +18,7 @@ export const AuthPage = ({ mode = "login" }: AuthPageProps) => {
     // If the user just verified and somehow ended up on the login page, redirect them
     if (justVerified) {
       sessionStorage.removeItem('justVerified');
-      navigate('/dashboard', { replace: true });
+      navigate('/prediction', { replace: true });
     }
   }, [justVerified, navigate]);
   
@@ -38,9 +38,9 @@ export const AuthPage = ({ mode = "login" }: AuthPageProps) => {
     );
   }
   
-  // Redirect to dashboard if already signed in
+  // Redirect to prediction if already signed in
   if (isSignedIn) {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/prediction" replace />;
   }
   
   return <Auth initialMode={mode} />;
